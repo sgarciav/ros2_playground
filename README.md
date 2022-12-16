@@ -25,7 +25,7 @@ with.
 
 Clone this repo to a location of your choosing:
 
-    git clone git@github.com:sgarciav/ros2_playground_setup.git
+    git clone git@github.com:sgarciav/ros2_playground.git
 
 Note that some examples depend on other 3rd party repositories. Their
 corresponding README files will inform when to run the vcs command to import

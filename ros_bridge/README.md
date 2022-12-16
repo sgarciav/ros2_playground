@@ -10,7 +10,7 @@ while reading through this README.
 
 Before spinning up a Docker container, create the main `.env` file:
 
-    cd /path/to/ros2_playground_setup/ros_bridge
+    cd /path/to/ros2_playground/ros_bridge
     echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
 
 ## First Time: 3rd Party Repos
@@ -18,7 +18,7 @@ Before spinning up a Docker container, create the main `.env` file:
 Make sure to have pulled the latest 3rd party repos into the ROS2 workspace
 using the `vcs` tool:
 
-    cd /path/to/ros2_playground_setup
+    cd /path/to/ros2_playground
     vcs import ros2_ws/src < tools.repos
     vcs pull ros2_ws/src
 
@@ -28,7 +28,7 @@ using the `vcs` tool:
 
 1. Build the Docker image:
 
-        cd /path/to/ros2_playground_setup/ros_bridge
+        cd /path/to/ros2_playground/ros_bridge
         docker-compose build
 
     Grab some coffee. The image will take some time to build the `ros1_bridge`
@@ -36,7 +36,7 @@ using the `vcs` tool:
 
 2. Spin the container:
 
-        cd /path/to/ros2_playground_setup/ros_bridge
+        cd /path/to/ros2_playground/ros_bridge
         docker-compose up -d
 
 3. Access the main container:
@@ -91,7 +91,7 @@ from [this YouTube video](https://www.youtube.com/watch?v=sJLvv1xtjSM).
 
 Exit out of all containers, and stop the spinning containers by executing:
 
-    cd /path/to/ros2_playground_setup/ros_bridge
+    cd /path/to/ros2_playground/ros_bridge
     docker-compose stop
 
 # Limitations

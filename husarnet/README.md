@@ -16,12 +16,12 @@ and `home-env` directories. The `JOINCODE` is the same in both files, only the
 Before spinning up a Docker container, create the main `.env` file to let the
 Docker environment know which side of the network it's spinning:
 
-    cd /path/to/ros2_playground_setup/husarnet
+    cd /path/to/ros2_playground/husarnet
     echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
     echo -e "HUSARNET_SIDE=xxx" >> .env
 
-where `xxx` is `field` (setup on the mowers) or `home` (setup on the home base
-machines).
+where `xxx` is `field` (setup on the system at the field) or `home` (setup on
+the home base machines).
 
 # Run the Example
 
@@ -32,12 +32,12 @@ once on the home machine:
 
 1. Build the Docker image:
 
-        cd /path/to/ros2_playground_setup/husarnet
+        cd /path/to/ros2_playground/husarnet
         docker-compose build
 
 2. Spin the containers:
 
-        cd /path/to/ros2_playground_setup/husarnet
+        cd /path/to/ros2_playground/husarnet
         docker-compose up -d
 
 3. Access the main container:
@@ -63,7 +63,7 @@ while the trajectory changes colors.
 
 Exit from the containers, and stop the spinning containers by executing:
 
-    cd /path/to/ros2_playground_setup/husarnet
+    cd /path/to/ros2_playground/husarnet
     docker-compose stop
 
 # Limitations
