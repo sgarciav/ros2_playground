@@ -7,8 +7,8 @@ is **not** intended as a comprehensive guide. Developers are encouraged to look
 through the corresponding documentation to learn more about each topic.
 
 Examples hosted in this repo include:
-* ROS1 <> ROS2 bridge ([link](https://github.com/Greenzie/ros2_test_environment/tree/master/ros_bridge))
-* Husarnet VPN solution ([link](https://github.com/Greenzie/ros2_test_environment/tree/master/husarnet))
+* ROS1 <> ROS2 bridge
+* Husarnet VPN solution
 
 # First Time Instructions
 
