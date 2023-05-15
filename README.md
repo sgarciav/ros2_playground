@@ -1,14 +1,15 @@
 # About
 
-This repo hosts environments so developers can play with some ROS2 tools. All
+This repo hosts environments so developers can play with some ROS 2 tools. All
 the examples are run in Docker environments. The examples hosted in this repo
-are meant to serve as a starting point for getting familiar with ROS2 tools. It
+are meant to serve as a starting point for getting familiar with ROS 2 tools. It
 is **not** intended as a comprehensive guide. Developers are encouraged to look
 through the corresponding documentation to learn more about each topic.
 
 Examples hosted in this repo include:
-* ROS1 <> ROS2 bridge
+* ROS 1 <> ROS 2 bridge
 * Husarnet VPN solution
+* Behavior Trees
 
 # First Time Instructions
 
@@ -29,4 +30,4 @@ Clone this repo to a location of your choosing:
 
 Note that some examples depend on other 3rd party repositories. Their
 corresponding README files will inform when to run the vcs command to import
-these repos into the provided ROS2 workspace.
+these repos into the provided ROS 2 workspace.
