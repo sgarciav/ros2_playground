@@ -1,8 +1,0 @@
-<root main_tree_to_execute="MainTree">
-  <BehaviorTree ID="MainTree">
-    <Sequence name="MySequence">
-      <Action ID="Action1" plugin="ros2_playground/MyAction1"/>
-      <Action ID="Action2" plugin="ros2_playground/MyAction2"/>
-    </Sequence>
-  </BehaviorTree>
-</root>
