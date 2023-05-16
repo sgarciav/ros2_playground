@@ -1,7 +1,7 @@
-# Example: ROS1 <> ROS2 Bridge
+# Example: ROS 1 <> ROS 2 Bridge
 
 While working through this example, keep in mind that there are two versions of
-ROS installed in the same Docker environment: ROS1 Noetic and ROS2 Galactic. By
+ROS installed in the same Docker environment: ROS 1 Noetic and ROS 2 Galactic. By
 default, neither environment is sourced. It'll be up to the developer to source
 the corresponding environment depending on the instructions so keep this in mind
 while reading through this README.
@@ -15,12 +15,12 @@ Before spinning up a Docker container, create the main `.env` file:
 
 ## First Time: 3rd Party Repos
 
-Make sure to have pulled the latest 3rd party repos into the ROS2 workspace
+Make sure to have pulled the latest 3rd party repos into the ROS 2 workspace
 using the `vcs` tool:
 
-    cd /path/to/ros2_playground
-    vcs import ros2_ws/src < tools.repos
-    vcs pull ros2_ws/src
+    cd /path/to/ros2_playground/ros_bridge
+    vcs import ../ros2_ws/src < tools.repos
+    vcs pull ../ros2_ws/src
 
 # Run the Example
 
@@ -54,32 +54,32 @@ that will be connected to all other spinning containers on the same machine.
 Each of the following set of commands will be executed inside a new spinning
 container - each in ts own terminal:
 
-1. Terminal 1: Start the ROS1 roscore:
+1. Terminal 1: Start the ROS 1 roscore:
 
         source /opt/ros/noetic/setup.bash
         roscore
 
-2. Terminal 2: Start the ROS1 <> ROS2 bridge:
+2. Terminal 2: Start the ROS 1 <> ROS 2 bridge:
 
         source /opt/ros/galactic/setup.bash
         source ~/workspaces/ros2_ws/install/local_setup.bash
         source /opt/ros/noetic/setup.bash
         ros2 run ros1_bridge dynamic_bridge
 
-3. Terminal 3: Run the turtle sim **ROS2** node:
+3. Terminal 3: Run the turtle sim **ROS 2** node:
 
         source /opt/ros/galactic/setup.bash
         source ~/workspaces/ros2_ws/install/local_setup.bash
         ros2 run turtlesim turtlesim_node
 
-4. Terminal 4: Run the **ROS1** teleop node:
+4. Terminal 4: Run the **ROS 1** teleop node:
 
         source /opt/ros/noetic/setup.bash
         rosrun turtlesim turtle_teleop_key
 
-At this point you should be able to command the ROS2 turtle from a ROS1 teleop
-interaction. The bridge node is taking care of translating the ROS1 messages in
-the `/turtle1/cmd_vel` topic to ROS2 messages.
+At this point you should be able to command the ROS 2 turtle from a ROS 1 teleop
+interaction. The bridge node is taking care of translating the ROS 1 messages in
+the `/turtle1/cmd_vel` topic to ROS 2 messages.
 
 As an experment, you can kill the ros bridge node and see how the
 communication between the teleop and turtle nodes doesn't exist anymore.
