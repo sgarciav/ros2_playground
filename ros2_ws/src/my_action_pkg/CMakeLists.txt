@@ -12,6 +12,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
+
 add_executable(fibonacci_server
   src/fibonacci_action_server.cpp
   )
@@ -25,7 +26,25 @@ ament_target_dependencies(fibonacci_server
   rclcpp_components
   )
 
+
+add_executable(fibonacci_client
+  src/fibonacci_action_client.cpp
+  )
+target_include_directories(fibonacci_client
+  PUBLIC include
+  )
+ament_target_dependencies(fibonacci_client
+  action_interfaces
+  rclcpp
+  rclcpp_action
+  rclcpp_components
+  )
+
+
 install(TARGETS fibonacci_server
+  DESTINATION lib/${PROJECT_NAME}
+  )
+install(TARGETS fibonacci_client
   DESTINATION lib/${PROJECT_NAME}
   )
 
