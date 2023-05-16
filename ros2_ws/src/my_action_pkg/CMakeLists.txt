@@ -12,36 +12,22 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
-add_library(fibonacci_server SHARED
-  src/fibonacci_action_server.cpp)
+add_executable(fibonacci_server
+  src/fibonacci_action_server.cpp
+  )
 target_include_directories(fibonacci_server
-  PUBLIC include)
-# target_include_directories(fibonacci_server PRIVATE
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#   $<INSTALL_INTERFACE:include>)
-target_compile_definitions(fibonacci_server
-  PRIVATE "MY_ACTION_PKG_BUILDING_DLL")
+  PUBLIC include
+  )
 ament_target_dependencies(fibonacci_server
   action_interfaces
   rclcpp
   rclcpp_action
   rclcpp_components
   )
-rclcpp_components_register_node(fibonacci_server PLUGIN
-  "action_tutorials_cpp::FibonacciActionServer" EXECUTABLE
-  fibonacci_action_server
+
+install(TARGETS fibonacci_server
+  DESTINATION lib/${PROJECT_NAME}
   )
-
-
-
-install(TARGETS
-  fibonacci_server
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-# install(TARGETS fibonacci_server
-#   DESTINATION lib/${PROJECT_NAME}
-#   )
 
 
 if(BUILD_TESTING)
