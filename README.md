@@ -9,7 +9,7 @@ through the corresponding documentation to learn more about each topic.
 Examples hosted in this repo include:
 * ROS 1 <> ROS 2 bridge
 * Husarnet VPN solution
-* Behavior Trees
+* ROS 2 Actions
 
 # First Time Instructions
 
