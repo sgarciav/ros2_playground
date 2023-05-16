@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop-focal
+FROM osrf/ros:humble-desktop-full
 
 MAINTAINER Sergio Garcia
 ENV DEBIAN_FRONTEND noninteractive
