@@ -29,14 +29,14 @@ USER $USERNAME
 # Install code dependencies and setup ros environment
 RUN sudo apt-get update \
     && rosdep update \
-    && source /opt/ros/galactic/setup.bash \
-    && echo 'source /opt/ros/galactic/setup.bash' >> /home/$USERNAME/.bashrc \
+    && source /opt/ros/humble/setup.bash \
+    && echo 'source /opt/ros/humble/setup.bash' >> /home/$USERNAME/.bashrc \
     && echo 'source /usr/share/colcon_cd/function/colcon_cd.sh' >> /home/$USERNAME/.bashrc
 
 RUN mkdir -p /home/$USERNAME/workspaces/ros2_ws
 WORKDIR /home/$USERNAME/workspaces
 
-# Build the packages in the ROS2 workspace (except the ROS bridge)
+# Build the packages in the ROS2 workspace
 COPY --chown=ros ros2_ws ros2_ws
 RUN source /opt/ros/humble/setup.bash \
     && sudo rosdep install --from-paths . --ignore-src -r -y --rosdistro=humble \

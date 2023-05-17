@@ -1,0 +1,9 @@
+repositories:
+  BehaviorTree.CPP:
+    type: git
+    url: git@github.com:BehaviorTree/BehaviorTree.CPP.git
+    version: master
+  BehaviorTree.ROS2:
+    type: git
+    url: git@github.com:BehaviorTree/BehaviorTree.ROS2.git
+    version: humble

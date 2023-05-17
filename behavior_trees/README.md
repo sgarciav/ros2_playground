@@ -1,7 +1,10 @@
 # Example: Behavior Trees
 
 [Behavior Trees](https://www.behaviortree.dev/) are your best friend for
-replacing your finite state machine.
+implementing your finite state machine. Essentially, it's a lovely interface
+that wraps all your ROS Actions and provides an easy way to organize them as
+needed. This allows for a robust and modular implementation of the behaviors of
+interest.
 
 ## First Time: Main .env file
 
@@ -10,14 +13,14 @@ Before spinning up a Docker container, create the main `.env` file:
     cd /path/to/ros2_playground/behavior_trees
     echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
 
-<!-- ## First Time: 3rd Party Repos -->
+## First Time: 3rd Party Repos
 
-<!-- Make sure to have pulled the latest 3rd party repos into the ROS2 workspace -->
-<!-- using the `vcs` tool: -->
+Make sure to have pulled the latest 3rd party repos into the ROS2 workspace
+using the `vcs` tool:
 
-<!--     cd /path/to/ros2_playground -->
-<!--     vcs import ros2_ws/src < tools.repos -->
-<!--     vcs pull ros2_ws/src -->
+    cd /path/to/ros2_playground/behavior_trees
+    vcs import ../ros2_ws/src < tools.repos
+    vcs pull ../ros2_ws/src
 
 # Run the Example
 
@@ -37,7 +40,7 @@ Before spinning up a Docker container, create the main `.env` file:
 
         docker exec -it ros2_playground_behavior_trees /bin/bash
 
-Once the image is built, you can rerun the tests by starting at Step 2.
+Once the image is built, you can spin up the container by starting at Step 2.
 
 **NOTE**: Developers can access any number of containers by opening a new
 terminal and executing Step 3. This will drop you into a new spinning container
