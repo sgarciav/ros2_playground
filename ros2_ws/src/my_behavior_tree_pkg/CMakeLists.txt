@@ -10,6 +10,29 @@ find_package(ament_cmake REQUIRED)
 find_package(action_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(behaviortree_cpp REQUIRED)
+
+
+# add_executable(behavior_tree_engine
+#   src/behavior_tree_engine.cpp)
+# target_include_directories(behavior_tree_engine
+#   PUBLIC include)
+# ament_target_dependencies(behavior_tree_engine
+#   rclcpp
+#   # rclcpp_action
+#   action_interfaces
+#   behaviortree_cpp
+#   )
+
+
+# install(TARGETS behavior_tree_engine
+#   DESTINATION lib/${PROJECT_NAME}
+#   )
+
+install(DIRECTORY launch behavior_trees
+  DESTINATION share/${PROJECT_NAME}
+  )
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
