@@ -21,7 +21,7 @@ target_include_directories(fibonacci_client_bt
 ament_target_dependencies(fibonacci_client_bt
   rclcpp
   action_interfaces
-  # behaviortree_cpp
+  behaviortree_cpp
   behaviortree_ros2
   )
 
@@ -36,14 +36,27 @@ ament_target_dependencies(behavior_tree_engine
   rclcpp
   rclcpp_action
   action_interfaces
-  # behaviortree_cpp
+  behaviortree_cpp
   behaviortree_ros2
   )
 
 
+add_executable(example
+  src/example.cpp)
+ament_target_dependencies(example
+  rclcpp
+  rclcpp_action
+  action_interfaces
+  behaviortree_cpp
+  behaviortree_ros2
+  )
+
+# ====================
+
 install(TARGETS
   behavior_tree_engine
   fibonacci_client_bt
+  example
   DESTINATION lib/${PROJECT_NAME}
   )
 
