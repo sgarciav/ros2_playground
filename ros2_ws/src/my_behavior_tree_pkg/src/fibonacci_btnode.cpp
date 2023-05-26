@@ -9,7 +9,9 @@
 // using BT::RosActionNode::providedBasicPorts()
 BT::PortsList FibonacciAction::providedPorts()
 {
-  return providedBasicPorts({BT::InputPort<unsigned>("order")});
+  BT::PortsList list;
+  list.insert({BT::InputPort<int>("order")});
+  return providedBasicPorts(list);
 }
 
 // This is called when the TreeNode is ticked and it should
