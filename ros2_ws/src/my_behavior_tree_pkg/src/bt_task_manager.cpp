@@ -33,34 +33,43 @@ public:
 
 
 
-static const char* xml_text = R"(
-<root BTCPP_format="4" main_tree_to_execute="MainTree">
-  <BehaviorTree ID="MainTree">
-    <Sequence name="main_sequence">
-      <SaySomething message="Hello, World!" />
-      <FibonacciAction order="5" />
-    </Sequence>
-  </BehaviorTree>
-</root>
-)";
+// static const char* xml_text = R"(
+// <root BTCPP_format="4" main_tree_to_execute="MainTree">
+//   <BehaviorTree ID="MainTree">
+//     <Sequence name="main_sequence">
+//       <SaySomething message="Hello, World!" />
+//       <FibonacciAction order="5" />
+//     </Sequence>
+//   </BehaviorTree>
+// </root>
+// )";
 
 
 
 
 int main(int argc, char * argv[])
 {
+  // Initialize node
   rclcpp::init(argc, argv);
   auto nh = std::make_shared<rclcpp::Node>("bt_task_manager");
+
+  // Get parameters from the launch file
+  nh->declare_parameter("path_to_tree", "main_tree.xml");
+  std::string path_to_tree = nh->get_parameter("path_to_tree").get_parameter_value().get<std::string>();
 
   BT::RosNodeParams params;
   params.nh = nh;
   params.default_port_value = "fibonacci";
 
+  // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", params);
 
-  auto tree = factory.createTreeFromText(xml_text);
+  // Create the tree
+  // You can load in the tree either from txt or from a file
+  // BT::Tree tree = factory.createTreeFromText(xml_text);
+  BT::Tree tree = factory.createTreeFromFile(path_to_tree);
 
   tree.tickWhileRunning();
 

@@ -1,7 +1,8 @@
 <root BTCPP_format="4" main_tree_to_execute="MainTree">
   <BehaviorTree ID="MainTree">
     <Sequence name="main_sequence">
-      <Fibonacci name="fibonacci_action" order="5" action_name="fibonacci"/>
+      <SaySomething message="Hello, World!" />
+      <FibonacciAction order="5" />
     </Sequence>
   </BehaviorTree>
 </root>

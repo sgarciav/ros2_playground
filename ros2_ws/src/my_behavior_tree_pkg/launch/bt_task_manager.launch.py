@@ -25,10 +25,9 @@ def generate_launch_description():
         [FindPackageShare("my_behavior_tree_pkg"), "behavior_trees", tree_filename]
     )
 
-
-    beahvior_tree_engine_node = Node(
+    behavior_tree_task_manager = Node(
         package="my_behavior_tree_pkg",
-        executable="behavior_tree_engine",
+        executable="bt_task_manager",
         output={
             "stdout": "screen",
             "stderr": "screen",
@@ -39,7 +38,7 @@ def generate_launch_description():
     )
 
     nodes = [
-        beahvior_tree_engine_node,
+        behavior_tree_task_manager,
     ]
 
     return LaunchDescription(declared_arguments + nodes)
