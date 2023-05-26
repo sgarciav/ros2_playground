@@ -1,12 +1,8 @@
 #include "my_behavior_tree_pkg/fibonacci_client_bt.hpp"
 
-using namespace BT;
+// This example was taken from:
+// https://www.behaviortree.dev/docs/ros2_integration/
 
-FibonacciActionClientBT::FibonacciActionClientBT(const std::string& name,
-                                                 const BT::NodeConfig& conf,
-                                                 const BT::RosNodeParams& params)
-  : BT::RosActionNode<action_interfaces::action::Fibonacci>(name, conf, params)
-{}
 
 // The specific ports of this Derived class
 // should be merged with the ports of the base class,

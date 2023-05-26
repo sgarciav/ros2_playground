@@ -5,7 +5,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
+
 find_package(ament_cmake REQUIRED)
 find_package(action_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -13,6 +14,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(behaviortree_cpp REQUIRED)
 find_package(behaviortree_ros2 REQUIRED)
 
+# Action Wrappers
 
 add_library(fibonacci_client_bt STATIC
   src/fibonacci_client_bt.cpp)
@@ -25,14 +27,15 @@ ament_target_dependencies(fibonacci_client_bt
   behaviortree_ros2
   )
 
+# Task Manager
 
-add_executable(behavior_tree_engine
-  src/behavior_tree_engine.cpp)
-target_include_directories(behavior_tree_engine
+add_executable(bt_task_manager
+  src/bt_task_manager.cpp)
+target_include_directories(bt_task_manager
   PUBLIC include)
-target_link_libraries(behavior_tree_engine
+target_link_libraries(bt_task_manager
   fibonacci_client_bt)
-ament_target_dependencies(behavior_tree_engine
+ament_target_dependencies(bt_task_manager
   rclcpp
   rclcpp_action
   action_interfaces
@@ -40,23 +43,12 @@ ament_target_dependencies(behavior_tree_engine
   behaviortree_ros2
   )
 
-
-add_executable(example
-  src/example.cpp)
-ament_target_dependencies(example
-  rclcpp
-  rclcpp_action
-  action_interfaces
-  behaviortree_cpp
-  behaviortree_ros2
-  )
 
 # ====================
 
 install(TARGETS
-  behavior_tree_engine
   fibonacci_client_bt
-  example
+  bt_task_manager
   DESTINATION lib/${PROJECT_NAME}
   )
 
