@@ -57,14 +57,15 @@ int main(int argc, char * argv[])
   nh->declare_parameter("path_to_tree", "main_tree.xml");
   std::string path_to_tree = nh->get_parameter("path_to_tree").get_parameter_value().get<std::string>();
 
-  BT::RosNodeParams params;
-  params.nh = nh;
-  params.default_port_value = "fibonacci";
+  // Define the ROS params for each class that inherits from the RosActionNode class
+  BT::RosNodeParams fibonacci_params;
+  fibonacci_params.nh = nh;
+  fibonacci_params.default_port_value = "fibonacci"; // this is the name of the ROS 2 action server
 
   // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
-  factory.registerNodeType<FibonacciAction>("FibonacciAction", params);
+  factory.registerNodeType<FibonacciAction>("FibonacciAction", fibonacci_params);
 
   // Create the tree
   // You can load in the tree either from txt or from a file
