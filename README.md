@@ -10,6 +10,7 @@ Examples hosted in this repo include:
 * ROS 1 <> ROS 2 bridge
 * Husarnet VPN solution
 * ROS 2 Actions
+* Behavior Trees
 
 # First Time Instructions
 
