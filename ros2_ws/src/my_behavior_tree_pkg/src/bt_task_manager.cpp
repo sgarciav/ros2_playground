@@ -4,7 +4,7 @@
 #include <behaviortree_ros2/bt_action_node.hpp>
 
 #include "action_interfaces/action/fibonacci.hpp"
-#include "my_behavior_tree_pkg/fibonacci_client_bt.hpp" // ROS 2 action client BT wrapper
+#include "my_behavior_tree_pkg/fibonacci_btnode.hpp" // ROS 2 action client BT wrapper
 
 
 // Example of a simple non-ROS action
@@ -38,7 +38,7 @@ static const char* xml_text = R"(
   <BehaviorTree ID="MainTree">
     <Sequence name="main_sequence">
       <SaySomething message="Hello, World!" />
-      <FibonacciActionClientBT order="5" />
+      <FibonacciAction order="5" />
     </Sequence>
   </BehaviorTree>
 </root>
@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
 
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
-  factory.registerNodeType<FibonacciActionClientBT>("FibonacciActionClientBT", params);
+  factory.registerNodeType<FibonacciAction>("FibonacciAction", params);
 
   auto tree = factory.createTreeFromText(xml_text);
 

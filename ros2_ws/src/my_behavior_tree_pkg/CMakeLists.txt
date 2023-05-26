@@ -16,11 +16,11 @@ find_package(behaviortree_ros2 REQUIRED)
 
 # Action Wrappers
 
-add_library(fibonacci_client_bt STATIC
-  src/fibonacci_client_bt.cpp)
-target_include_directories(fibonacci_client_bt
+add_library(fibonacci_btnode STATIC
+  src/fibonacci_btnode.cpp)
+target_include_directories(fibonacci_btnode
   PUBLIC include)
-ament_target_dependencies(fibonacci_client_bt
+ament_target_dependencies(fibonacci_btnode
   rclcpp
   action_interfaces
   behaviortree_cpp
@@ -34,7 +34,7 @@ add_executable(bt_task_manager
 target_include_directories(bt_task_manager
   PUBLIC include)
 target_link_libraries(bt_task_manager
-  fibonacci_client_bt)
+  fibonacci_btnode)
 ament_target_dependencies(bt_task_manager
   rclcpp
   rclcpp_action
@@ -47,7 +47,7 @@ ament_target_dependencies(bt_task_manager
 # ====================
 
 install(TARGETS
-  fibonacci_client_bt
+  fibonacci_btnode
   bt_task_manager
   DESTINATION lib/${PROJECT_NAME}
   )

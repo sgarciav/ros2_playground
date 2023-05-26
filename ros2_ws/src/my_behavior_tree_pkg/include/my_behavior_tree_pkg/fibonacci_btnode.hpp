@@ -5,10 +5,10 @@
 // This example was taken from:
 // https://www.behaviortree.dev/docs/ros2_integration/
 
-class FibonacciActionClientBT : public BT::RosActionNode<action_interfaces::action::Fibonacci>
+class FibonacciAction : public BT::RosActionNode<action_interfaces::action::Fibonacci>
 {
 public:
-  FibonacciActionClientBT(const std::string& name,
+  FibonacciAction(const std::string& name,
                           const BT::NodeConfig& conf,
                           const BT::RosNodeParams& params)
     : BT::RosActionNode<action_interfaces::action::Fibonacci>(name, conf, params)

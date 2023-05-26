@@ -1,4 +1,4 @@
-#include "my_behavior_tree_pkg/fibonacci_client_bt.hpp"
+#include "my_behavior_tree_pkg/fibonacci_btnode.hpp"
 
 // This example was taken from:
 // https://www.behaviortree.dev/docs/ros2_integration/
@@ -7,7 +7,7 @@
 // The specific ports of this Derived class
 // should be merged with the ports of the base class,
 // using BT::RosActionNode::providedBasicPorts()
-BT::PortsList FibonacciActionClientBT::providedPorts()
+BT::PortsList FibonacciAction::providedPorts()
 {
   return providedBasicPorts({BT::InputPort<unsigned>("order")});
 }
@@ -15,7 +15,7 @@ BT::PortsList FibonacciActionClientBT::providedPorts()
 // This is called when the TreeNode is ticked and it should
 // send the request to the action server
 // bool setGoal(BT::RosActionNode::Goal& goal) override
-bool FibonacciActionClientBT::setGoal(Goal& goal)
+bool FibonacciAction::setGoal(Goal& goal)
 {
   // get "order" from the Input port
   getInput("order", goal.order);
@@ -25,7 +25,7 @@ bool FibonacciActionClientBT::setGoal(Goal& goal)
 
 // Callback executed when the reply is received.
 // Based on the reply you may decide to return SUCCESS or FAILURE.
-BT::NodeStatus FibonacciActionClientBT::onResultReceived(const WrappedResult& wr)
+BT::NodeStatus FibonacciAction::onResultReceived(const WrappedResult& wr)
 {
   std::stringstream ss;
   ss << "Result received: ";
@@ -42,7 +42,7 @@ BT::NodeStatus FibonacciActionClientBT::onResultReceived(const WrappedResult& wr
 // This will set the status of the TreeNode to either SUCCESS or FAILURE,
 // based on the return value.
 // If not overridden, it will return FAILURE by default.
-BT::NodeStatus FibonacciActionClientBT::onFailure(BT::ActionNodeErrorCode error)
+BT::NodeStatus FibonacciAction::onFailure(BT::ActionNodeErrorCode error)
 {
   RCLCPP_ERROR(node_->get_logger(), "Error: %d", error);
   return BT::NodeStatus::FAILURE;
@@ -55,7 +55,7 @@ BT::NodeStatus FibonacciActionClientBT::onFailure(BT::ActionNodeErrorCode error)
 // the action, and consider the TreeNode completed.
 // In that case, return SUCCESS or FAILURE.
 // The Cancel request will be send automatically to the server.
-BT::NodeStatus FibonacciActionClientBT::onFeedback(const std::shared_ptr<const Feedback> feedback)
+BT::NodeStatus FibonacciAction::onFeedback(const std::shared_ptr<const Feedback> feedback)
 {
   std::stringstream ss;
   ss << "Next number in sequence received: ";
