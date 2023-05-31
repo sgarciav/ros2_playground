@@ -1,36 +1,11 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <behaviortree_cpp/behavior_tree.h>
-
 #include <behaviortree_ros2/bt_action_node.hpp>
 
 #include "action_interfaces/action/fibonacci.hpp"
+
 #include "my_behavior_tree_pkg/fibonacci_btnode.hpp" // ROS 2 action client BT wrapper
-
-
-// Example of a simple non-ROS action
-class SaySomething : public BT::SyncActionNode
-{
-public:
-  SaySomething(const std::string& name, const BT::NodeConfiguration& config)
-    : BT::SyncActionNode(name, config)
-  {}
-
-  static BT::PortsList providedPorts()
-  {
-    return { BT::InputPort<std::string>("message") };
-  }
-
-  BT::NodeStatus tick() override
-  {
-    std::string message;
-    getInput("message", message);
-    std::cout << "===========" << std::endl;
-    std::cout << "Robot says: " << message << std::endl;
-    std::cout << "===========" << std::endl;
-    return BT::NodeStatus::SUCCESS;
-  }
-};
-
+#include "my_behavior_tree_pkg/saysomething_btnode.hpp" // simple non-ROS BT node
 
 
 // static const char* xml_text = R"(
@@ -43,7 +18,6 @@ public:
 //   </BehaviorTree>
 // </root>
 // )";
-
 
 
 

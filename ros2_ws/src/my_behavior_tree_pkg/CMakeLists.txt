@@ -14,7 +14,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(behaviortree_cpp REQUIRED)
 find_package(behaviortree_ros2 REQUIRED)
 
-# Action Wrappers
+# BT Nodes
 
 add_library(fibonacci_btnode STATIC
   src/fibonacci_btnode.cpp)
@@ -27,14 +27,25 @@ ament_target_dependencies(fibonacci_btnode
   behaviortree_ros2
   )
 
+add_library(saysomething_btnode STATIC
+  src/saysomething_btnode.cpp)
+target_include_directories(saysomething_btnode
+  PUBLIC include)
+ament_target_dependencies(saysomething_btnode
+  rclcpp
+  behaviortree_cpp
+  )
+
 # Task Manager
 
 add_executable(bt_task_manager
   src/bt_task_manager.cpp)
 target_include_directories(bt_task_manager
   PUBLIC include)
-target_link_libraries(bt_task_manager
-  fibonacci_btnode)
+target_link_libraries(bt_task_manager # link all the BT nodes
+  saysomething_btnode
+  fibonacci_btnode
+  )
 ament_target_dependencies(bt_task_manager
   rclcpp
   rclcpp_action
@@ -47,6 +58,7 @@ ament_target_dependencies(bt_task_manager
 # ====================
 
 install(TARGETS
+  saysomething_btnode
   fibonacci_btnode
   bt_task_manager
   DESTINATION lib/${PROJECT_NAME}
