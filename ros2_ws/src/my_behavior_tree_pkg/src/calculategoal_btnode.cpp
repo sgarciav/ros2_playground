@@ -1,5 +1,4 @@
 #include "my_behavior_tree_pkg/calculategoal_btnode.hpp"
-// #include "my_behavior_tree_pkg/custom_data_structures.h"
 #include <geometry_msgs/msg/point.hpp>
 
 BT::PortsList CalculateGoal::providedPorts()
@@ -14,7 +13,5 @@ BT::NodeStatus CalculateGoal::tick()
   mygoal.y = 2.3;
   setOutput<geometry_msgs::msg::Point>("goal", mygoal);
 
-  // Position2D mygoal = {1.1, 2.3};
-  // setOutput<Position2D>("goal", mygoal);
   return BT::NodeStatus::SUCCESS;
 }
