@@ -13,6 +13,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(behaviortree_cpp REQUIRED)
 find_package(behaviortree_ros2 REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 # BT Nodes
 
@@ -36,6 +37,26 @@ ament_target_dependencies(saysomething_btnode
   behaviortree_cpp
   )
 
+add_library(calculategoal_btnode STATIC
+  src/calculategoal_btnode.cpp)
+target_include_directories(calculategoal_btnode
+  PUBLIC include)
+ament_target_dependencies(calculategoal_btnode
+  rclcpp
+  behaviortree_cpp
+  geometry_msgs
+  )
+
+add_library(printtarget_btnode STATIC
+  src/printtarget_btnode.cpp)
+target_include_directories(printtarget_btnode
+  PUBLIC include)
+ament_target_dependencies(printtarget_btnode
+  rclcpp
+  behaviortree_cpp
+  geometry_msgs
+  )
+
 # Task Manager
 
 add_executable(bt_task_manager
@@ -45,6 +66,8 @@ target_include_directories(bt_task_manager
 target_link_libraries(bt_task_manager # link all the BT nodes
   saysomething_btnode
   fibonacci_btnode
+  calculategoal_btnode
+  printtarget_btnode
   )
 ament_target_dependencies(bt_task_manager
   rclcpp
@@ -60,6 +83,8 @@ ament_target_dependencies(bt_task_manager
 install(TARGETS
   saysomething_btnode
   fibonacci_btnode
+  calculategoal_btnode
+  printtarget_btnode
   bt_task_manager
   DESTINATION lib/${PROJECT_NAME}
   )

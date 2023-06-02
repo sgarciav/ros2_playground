@@ -3,6 +3,8 @@
     <Sequence name="main_sequence">
       <SaySomething message="Hello, World!" />
       <FibonacciAction order="5" />
+      <CalculateGoal goal="{GoalPosition}" />
+      <PrintTarget target="{GoalPosition}" />
     </Sequence>
   </BehaviorTree>
 </root>

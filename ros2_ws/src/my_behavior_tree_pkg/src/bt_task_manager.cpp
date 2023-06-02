@@ -6,6 +6,8 @@
 
 #include "my_behavior_tree_pkg/fibonacci_btnode.hpp" // ROS 2 action client BT wrapper
 #include "my_behavior_tree_pkg/saysomething_btnode.hpp" // simple non-ROS BT node
+#include "my_behavior_tree_pkg/calculategoal_btnode.hpp" // write custom port type example
+#include "my_behavior_tree_pkg/printtarget_btnode.hpp" // read from custom port type example
 
 
 // static const char* xml_text = R"(
@@ -39,6 +41,8 @@ int main(int argc, char * argv[])
   // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
+  factory.registerNodeType<CalculateGoal>("CalculateGoal");
+  factory.registerNodeType<PrintTarget>("PrintTarget");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", fibonacci_params);
 
   // Create the tree
