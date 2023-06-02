@@ -1,13 +1,13 @@
 # Example: Behavior Trees
 
-[Behavior Trees](https://www.behaviortree.dev/) are your best friend for
+[Behavior Trees](https://www.behaviortree.dev/) (BTs) are your best friend for
 implementing your finite state machine. Essentially, it's a lovely interface
 that wraps all your ROS Actions and provides an easy way to organize them as
 needed. This allows for a robust and modular implementation of the behaviors of
 interest.
 
 [This article](https://medium.com/@nullbyte.in/behavior-trees-for-ros2-part-1-unlocking-advanced-robotic-decision-making-and-control-7856582fb812) provides
-a good explanation of what are behavior trees and how teh software works. At
+a good explanation of what are behavior trees and how the software works. At
 the time of writing this README, the author has not yet released a post about
 how to integrate behavior trees with ROS 2. This repo provides a working example
 on how to do so.
@@ -28,14 +28,25 @@ To following are notes to summarize the general architecture:
    loads the tree, and executes the tree. The `bt_task_manager` ROS 2 node in
    this example provides all the basics needed.
 
-## First Time: Main .env file
+## Examples Examplanation
+
+This package provides working examples for some basic concepts related to BTs
+and their interactions with ROS 2. Namely:
+
+* BT nodes that inherit from the `SyncActionNode` class.
+* BT nodes that inherit from the `RodActionNode` class.
+* Input/output ports that handle non-string message types (e.g., ROS messages).
+
+# First Time Instructions
+
+## Main .env file
 
 Before spinning up a Docker container, create the main `.env` file:
 
     cd /path/to/ros2_playground/behavior_trees
     echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
 
-## First Time: 3rd Party Repos
+## 3rd Party Repos
 
 Make sure to have pulled the latest 3rd party repos into the ROS2 workspace
 using the `vcs` tool:
@@ -70,7 +81,7 @@ that will be connected to all other spinning containers on the same machine.
 
 ## Run
 
-1. In one termina, run the ROS 2 action server:
+1. In one terminal, run the ROS 2 action server:
 
         ros2 run my_action_pkg fibonacci_server
 
@@ -78,8 +89,13 @@ that will be connected to all other spinning containers on the same machine.
 
         ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py
 
-At this point you should see the behavior tree manager go through the two tasks
-specified in the xml tree: 1) SaySomething, and 2) FibonacciAction.
+At this point you should see the behavior tree manager go through the tasks
+specified in the xml tree:
+
+1. SaySomething
+2. FibonacciAction
+3. ComputeGoal
+4. PrintTarget
 
 ## Stop the containers
 
