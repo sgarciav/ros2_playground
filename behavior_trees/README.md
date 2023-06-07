@@ -55,6 +55,19 @@ using the `vcs` tool:
     vcs import ../ros2_ws/src < tools.repos
     vcs pull ../ros2_ws/src
 
+## Shared Directory (optional)
+
+The `docker-compose` file for this project allows for a shared directory between
+the host and the Docker container. If you'd like to make use of it, create the
+shared directory in your host (instructions below) and the compose file will do
+the rest. This is helpful to add installer file like Groot2, for example.
+
+    cd /path/to/ros2_playground
+    mkdir -p shared_dir
+
+**NOTE**: These instructions **MUST** be executed **BEFORE** you sping up the
+container.
+
 # Run the Example
 
 ## Spin the containers

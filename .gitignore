@@ -1,4 +1,5 @@
 .env
+shared_dir
 ros1_bridge
 BehaviorTree.CPP
 BehaviorTree.ROS2

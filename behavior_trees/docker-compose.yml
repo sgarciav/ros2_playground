@@ -25,3 +25,4 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - ../ros2_ws/src:/home/ros/workspaces/ros2_ws/src
+      - ../shared_dir:/home/ros/shared_dir
