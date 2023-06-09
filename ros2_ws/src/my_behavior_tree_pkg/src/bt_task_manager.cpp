@@ -1,6 +1,5 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <behaviortree_cpp/behavior_tree.h>
-#include <behaviortree_ros2/bt_action_node.hpp>
 
 #include "action_interfaces/action/fibonacci.hpp"
 
@@ -8,6 +7,7 @@
 #include "my_behavior_tree_pkg/saysomething_btnode.hpp" // simple non-ROS BT node
 #include "my_behavior_tree_pkg/calculategoal_btnode.hpp" // write custom port type example
 #include "my_behavior_tree_pkg/printtarget_btnode.hpp" // read from custom port type example
+#include "my_behavior_tree_pkg/subscriber_int_btnode.hpp" // subscribe to ROS topic and write value to Blackbord
 
 
 // static const char* xml_text = R"(
@@ -38,12 +38,17 @@ int main(int argc, char * argv[])
   fibonacci_params.nh = nh;
   fibonacci_params.default_port_value = "fibonacci"; // this is the name of the ROS 2 action server
 
+  BT::RosNodeParams subscriber_int_params;
+  subscriber_int_params.nh = nh;
+  subscriber_int_params.default_port_value = "/fibonacci/order"; // this is the name of topic subscription
+
   // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
   factory.registerNodeType<CalculateGoal>("CalculateGoal");
   factory.registerNodeType<PrintTarget>("PrintTarget");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", fibonacci_params);
+  factory.registerNodeType<SubscriberInt>("SubscriberInt", subscriber_int_params);
 
   // Create the tree
   // You can load in the tree either from txt or from a file
