@@ -21,6 +21,13 @@
 // </root>
 // )";
 
+BT::RosNodeParams set_params(std::shared_ptr<rclcpp::Node> nh, std::string name)
+{
+  BT::RosNodeParams params;
+  params.nh = nh;
+  params.default_port_value = name; // server name (for actions) or topic name (for pubs and subs)
+  return params;
+}
 
 
 int main(int argc, char * argv[])
@@ -33,22 +40,13 @@ int main(int argc, char * argv[])
   nh->declare_parameter("path_to_tree", "main_tree.xml");
   std::string path_to_tree = nh->get_parameter("path_to_tree").get_parameter_value().get<std::string>();
 
-  // Define the ROS params for each class that inherits from the RosActionNode class
-  BT::RosNodeParams fibonacci_params;
-  fibonacci_params.nh = nh;
-  fibonacci_params.default_port_value = "fibonacci"; // this is the name of the ROS 2 action server
-
-  BT::RosNodeParams subscriber_int_params;
-  subscriber_int_params.nh = nh;
-  subscriber_int_params.default_port_value = "/fibonacci/order"; // this is the name of topic subscription
-
   // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomething>("SaySomething");
   factory.registerNodeType<CalculateGoal>("CalculateGoal");
   factory.registerNodeType<PrintTarget>("PrintTarget");
-  factory.registerNodeType<FibonacciAction>("FibonacciAction", fibonacci_params);
-  factory.registerNodeType<SubscriberInt>("SubscriberInt", subscriber_int_params);
+  factory.registerNodeType<FibonacciAction>("FibonacciAction", set_params(nh, "fibonacci"));
+  factory.registerNodeType<SubscriberInt>("SubscriberInt", set_params(nh, "/fibonacci/order"));
 
   // Create the tree
   // You can load in the tree either from txt or from a file
