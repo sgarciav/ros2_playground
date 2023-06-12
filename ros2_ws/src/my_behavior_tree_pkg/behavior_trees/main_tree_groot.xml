@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4"
+      main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <Sequence name="main_sequence">
+      <SaySomething message="Hello, World!"/>
+      <RetryUntilSuccessful num_attempts="30">
+        <Delay delay_msec="100">
+          <SubscriberInt order="{FibOrder}"/>
+        </Delay>
+      </RetryUntilSuccessful>
+      <FibonacciAction order="{FibOrder}"/>
+      <CalculateGoal goal="{GoalPosition}"/>
+      <PrintTarget target="{GoalPosition}"/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="CalculateGoal"
+            editable="true">
+      <output_port name="goal"/>
+    </Action>
+    <Action ID="FibonacciAction"
+            editable="true">
+      <input_port name="order"/>
+    </Action>
+    <Action ID="PrintTarget"
+            editable="true">
+      <input_port name="target"/>
+    </Action>
+    <Action ID="SaySomething"
+            editable="true">
+      <input_port name="message"/>
+    </Action>
+    <Action ID="SubscriberInt"
+            editable="true">
+      <output_port name="order"/>
+    </Action>
+  </TreeNodesModel>
+
+</root>

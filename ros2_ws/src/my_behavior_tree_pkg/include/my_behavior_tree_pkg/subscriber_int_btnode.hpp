@@ -13,9 +13,5 @@ public:
   {}
 
   static BT::PortsList providedPorts();
-  virtual void topicCallback(const std::shared_ptr<std_msgs::msg::Int32> msg);
   virtual BT::NodeStatus onTick(const typename std_msgs::msg::Int32::SharedPtr& last_msg);
-
-private:
-  int order_;
 };

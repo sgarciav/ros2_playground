@@ -9,24 +9,17 @@ BT::PortsList SubscriberInt::providedPorts()
   return providedBasicPorts(list);
 }
 
-void SubscriberInt::topicCallback(const std::shared_ptr<std_msgs::msg::Int32> msg)
-{
-  int order = msg->data;
-  std::cout << "===================" << order << std::endl;
-  RCLCPP_INFO(node_->get_logger(), "hearing: %d", order);
-  setOutput<int>("order", order);
-}
-
 BT::NodeStatus SubscriberInt::onTick(const typename std_msgs::msg::Int32::SharedPtr& last_msg)
 {
   if (last_msg == nullptr)
   {
+    RCLCPP_WARN(node_->get_logger(), "msg is null");
     return BT::NodeStatus::FAILURE;
   }
 
   int order = last_msg->data;
-  RCLCPP_INFO(node_->get_logger(), "==== ticked: %d", order);
-  // setOutput<int>("order", order);
+  RCLCPP_INFO(node_->get_logger(), "Tree has been ticked. Heard: %d", order);
+  setOutput<int>("order", order);
 
   return BT::NodeStatus::SUCCESS;
 }

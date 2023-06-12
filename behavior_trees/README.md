@@ -24,7 +24,12 @@ To following are notes to summarize the general architecture:
    example was
    taken [from here](https://www.behaviortree.dev/docs/ros2_integration/).
 
-3. There needs to be a task manager ROS 2 node that registers all the BT nodes,
+3. Nodes can also inherit from the `BT::RosTopicSubNode` or
+   `BT::RosTopicPubNode` classes. Their function is to subscribe or publish to
+   ROS topics, respectively. Use these nodes to pass data between ROS and the BT
+   Blackboard.
+
+4. There needs to be a task manager ROS 2 node that registers all the BT nodes,
    loads the tree, and executes the tree. The `bt_task_manager` ROS 2 node in
    this example provides all the basics needed.
 
@@ -34,8 +39,34 @@ This package provides working examples for some basic concepts related to BTs
 and their interactions with ROS 2. Namely:
 
 * BT nodes that inherit from the `SyncActionNode` class.
-* BT nodes that inherit from the `RodActionNode` class.
+  * Example:
+    [SaySomething](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/saysomething_btnode.cpp)
+  * Simple BT nodes that do not have a relationship with ROS.
+  * They are controlled by the `onTick()` function, which defines their
+    behavior.
+
+* BT nodes that inherit from the `RosActionNode` class.
+  * Example:
+    [Fibonacci](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/fibonacci_btnode.cpp)
+  * BT nodes that work as the ROS 2 action clients for their corresponding
+    action servers.
+  * Their function is to send a request to their action server, which is
+    reponsible for actually carrying out the task, and then return the status of
+    the action.
+
+* BT nodes that inherit from the `RosTopicSubNode` class.
+  * Example:
+    [SubscriberInt](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/subscriber_int_btnode.cpp)
+  * BT nodes that subscribe to a ROS topic and, typically, write the value to
+    the Blackboard for the rest of the BT architecture to leverage.
+
 * Input/output ports that handle non-string message types (e.g., ROS messages).
+  * Example:
+    [CalculateGoal](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/calculategoal_btnode.cpp) to
+    write to the Blackboard,
+    and
+    [PrintTarget](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/printtarget_btnode.cpp) to
+    read from the Backboard.
 
 # First Time Instructions
 
