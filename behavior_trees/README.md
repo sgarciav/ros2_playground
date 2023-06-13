@@ -125,21 +125,36 @@ that will be connected to all other spinning containers on the same machine.
 
 ## Run
 
-1. In one terminal, run the ROS 2 action server:
+1. In terminal 1, run the ROS 2 action server:
 
         ros2 run my_action_pkg fibonacci_server
 
-2. In a different terminal, run the behavior tree task manager:
+2. In terminal 2, run the behavior tree task manager to start the tree:
 
-        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py
+        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
+
+    The tree will start but will stop at the `SubscribeInt` task. You will see
+    the following messages printed in the terminal until the task hears a
+    message in the topic it's subscribed to:
+
+    ```
+    [bt_task_manager-1] [WARN] [1686650652.896902190] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650653.397232259] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650653.897523154] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650654.397771334] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650654.898057810] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650655.398351722] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650655.899318514] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650656.399711513] [bt_task_manager]: msg is null
+    [bt_task_manager-1] [WARN] [1686650656.900707227] [bt_task_manager]: msg is null
+    ```
+
+3. In terminal 3, publish a message to the corresponding fibonacci topic:
+
+        ros2 topic pub -r 3 /fibonacci/order std_msgs/msg/Int32 "{data: 9}"
 
 At this point you should see the behavior tree manager go through the tasks
-specified in the xml tree:
-
-1. SaySomething
-2. FibonacciAction
-3. ComputeGoal
-4. PrintTarget
+specified in the selected xml tree.
 
 ## Stop the containers
 
