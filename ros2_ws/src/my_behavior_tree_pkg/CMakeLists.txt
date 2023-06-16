@@ -86,9 +86,9 @@ target_link_libraries(bt_task_manager # link all the BT nodes
 ament_target_dependencies(bt_task_manager
   rclcpp
   rclcpp_action
-  action_interfaces
   behaviortree_cpp
   behaviortree_ros2
+  std_msgs
   )
 
 
