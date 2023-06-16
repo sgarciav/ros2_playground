@@ -30,6 +30,17 @@ ament_target_dependencies(subscriber_int_btnode
   std_msgs
   )
 
+add_library(ros_to_blackboard_btnode STATIC
+  src/ros_to_blackboard_btnode.cpp)
+target_include_directories(ros_to_blackboard_btnode
+  PUBLIC include)
+ament_target_dependencies(ros_to_blackboard_btnode
+  rclcpp
+  behaviortree_cpp
+  behaviortree_ros2
+  std_msgs
+  )
+
 add_library(fibonacci_btnode STATIC
   src/fibonacci_btnode.cpp)
 target_include_directories(fibonacci_btnode
@@ -82,6 +93,7 @@ target_link_libraries(bt_task_manager # link all the BT nodes
   fibonacci_btnode
   calculategoal_btnode
   printtarget_btnode
+  ros_to_blackboard_btnode
   )
 ament_target_dependencies(bt_task_manager
   rclcpp
@@ -95,6 +107,7 @@ ament_target_dependencies(bt_task_manager
 # ====================
 
 install(TARGETS
+  ros_to_blackboard_btnode
   subscriber_int_btnode
   saysomething_btnode
   fibonacci_btnode

@@ -1,7 +1,7 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <behaviortree_cpp/behavior_tree.h>
 
-#include "my_behavior_tree_pkg/ros_to_blackboard.hpp"
+#include "my_behavior_tree_pkg/ros_to_blackboard_btnode.hpp"
 
 #include "my_behavior_tree_pkg/fibonacci_btnode.hpp" // ROS 2 action client BT wrapper
 #include "my_behavior_tree_pkg/saysomething_btnode.hpp" // simple non-ROS BT node
@@ -51,7 +51,7 @@ int main(int argc, char * argv[])
   factory.registerNodeType<PrintTarget>("PrintTarget");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", set_params(nh, "fibonacci"));
   factory.registerNodeType<SubscriberInt>("SubscriberInt", set_params(nh, "/fibonacci/order"));
-  factory.registerNodeType<RosToBlackboard<std_msgs::msg::Int8>>("RosToBlackboard", set_params(nh, subscriber_topic_name));
+  factory.registerNodeType<RosToBlackboard>("RosToBlackboard", set_params(nh, subscriber_topic_name));
 
   // Create the tree
   // You can load in the tree either from txt or from a file

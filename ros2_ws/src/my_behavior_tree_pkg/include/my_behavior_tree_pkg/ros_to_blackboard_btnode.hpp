@@ -2,8 +2,11 @@
 
 #include <std_msgs/msg/int8.hpp>
 
-template <typename T>
-class RosToBlackboard : public BT::RosTopicSubNode<std_msgs::msg::Int8>
+// template <typename T>
+
+using T = std_msgs::msg::Int8;
+
+class RosToBlackboard : public BT::RosTopicSubNode<T>
 {
 public:
   RosToBlackboard(const std::string& name,
