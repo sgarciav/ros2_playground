@@ -135,7 +135,7 @@ that will be connected to all other spinning containers on the same machine.
 
 2. In terminal 2, run the behavior tree task manager to start the tree:
 
-        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
+        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml sub_topic:=[TOPIC NAME]
 
     The tree will start and you will see the following message displayed:
 
@@ -149,7 +149,7 @@ that will be connected to all other spinning containers on the same machine.
 
 3. In terminal 3, publish a message to the corresponding fibonacci topic:
 
-        ros2 topic pub -r 3 /bt_sub_topic std_msgs/msg/Int32 "{data: 9}"
+        ros2 topic pub -r 3 [TOPIC NAME] std_msgs/msg/Int32 "{data: 9}"
 
     At this point you should see the behavior tree manager go through the tasks
     specified in the selected xml tree.
