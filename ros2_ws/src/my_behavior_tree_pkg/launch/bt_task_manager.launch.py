@@ -17,17 +17,9 @@ def generate_launch_description():
             description="Name of the xml tree file.",
         )
     )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "sub_topic",
-            default_value="/bt_sub_topic",
-            description="Name of the ROS topic that the BT subscriber node is listening to.",
-        )
-    )
 
     # Initialize Arguments
     tree_filename = LaunchConfiguration("tree_filename")
-    subscriber_topic_name = LaunchConfiguration("sub_topic")
 
     path_to_tree_file = PathJoinSubstitution(
         [FindPackageShare("my_behavior_tree_pkg"), "behavior_trees", tree_filename]
@@ -42,7 +34,6 @@ def generate_launch_description():
         },
         parameters=[
             {'path_to_tree': path_to_tree_file},
-            {'subscriber_topic_name': subscriber_topic_name},
         ],
     )
 

@@ -6,7 +6,7 @@
       <SaySomething message="Hello, World!"/>
       <RetryUntilSuccessful num_attempts="-1">
         <Delay delay_msec="500">
-          <RosToBlackboard value="{FibOrder}"/> <!-- write order to FibOrder -->
+          <RosToBlackboardInt value="{FibOrder}"/> <!-- write order to FibOrder -->
         </Delay>
       </RetryUntilSuccessful>
       <FibonacciAction order="{FibOrder}"/> <!-- read from FibOrder -->

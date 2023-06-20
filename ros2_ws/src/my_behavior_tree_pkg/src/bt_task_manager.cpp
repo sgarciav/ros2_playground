@@ -37,10 +37,7 @@ int main(int argc, char * argv[])
 
   // Get parameters from the launch file
   nh->declare_parameter("path_to_tree", "main_tree.xml");
-  nh->declare_parameter("subscriber_topic_name", "/bt_sub_topic");
-
   std::string path_to_tree = nh->get_parameter("path_to_tree").get_parameter_value().get<std::string>();
-  std::string subscriber_topic_name = nh->get_parameter("subscriber_topic_name").get_parameter_value().get<std::string>();
 
   // Register the nodes into the BT factory
   BT::BehaviorTreeFactory factory;
@@ -48,7 +45,8 @@ int main(int argc, char * argv[])
   factory.registerNodeType<CalculateGoal>("CalculateGoal");
   factory.registerNodeType<PrintTarget>("PrintTarget");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", set_params(nh, "fibonacci"));
-  factory.registerNodeType<RosToBlackboard<std_msgs::msg::Int8>>("RosToBlackboard", set_params(nh, subscriber_topic_name));
+  // note that the name has to be unique
+  factory.registerNodeType<RosToBlackboard<std_msgs::msg::Int8>>("RosToBlackboardInt", set_params(nh, "/ros_to_blackboard/int"));
 
   // Create the tree
   // You can load in the tree either from txt or from a file

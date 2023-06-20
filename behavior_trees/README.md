@@ -59,10 +59,6 @@ and their interactions with ROS 2. Namely:
     [RosToBlackboard](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/include/my_behavior_tree_pkg/ros_to_blackboard_btnode.hpp)
   * BT nodes that subscribe to a ROS topic and, typically, write the value to
     the Blackboard for the rest of the BT architecture to leverage.
-  * The `RosToBlackboard` node, specifically, is a template class. Developers
-    can add it to the tree factory by specifying ANY ROS message type. This
-    nodemakes it such that developers don't need to define and compile a new
-    class for each ROS message type of interest.
 
 * Input/output ports that handle non-string message types (e.g., ROS messages).
   * Example:
@@ -71,6 +67,17 @@ and their interactions with ROS 2. Namely:
     and
     [PrintTarget](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/printtarget_btnode.cpp) to
     read from the Backboard.
+
+## RosToBlackboard
+
+The `RosToBlackboard` node is a special node. It's a template class. This node
+makes it such that developers don't need to define and compile a new class for
+each ROS message type of interest.
+
+Developers can register the node to the tree factory by specifying ANY ROS
+message type. They can register it as many times as they want but MAKE SURE that
+the node name and the topic it's susbcribing to are UNIQUE. The name is how you
+reference it in the xml tree.
 
 # First Time Instructions
 
@@ -135,7 +142,7 @@ that will be connected to all other spinning containers on the same machine.
 
 2. In terminal 2, run the behavior tree task manager to start the tree:
 
-        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml sub_topic:=[TOPIC NAME]
+        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
 
     The tree will start and you will see the following message displayed:
 
@@ -149,7 +156,7 @@ that will be connected to all other spinning containers on the same machine.
 
 3. In terminal 3, publish a message to the corresponding fibonacci topic:
 
-        ros2 topic pub -r 3 [TOPIC NAME] std_msgs/msg/Int32 "{data: 9}"
+        ros2 topic pub -r 3 /ros_to_blackboard/int std_msgs/msg/Int32 "{data: 9}"
 
     At this point you should see the behavior tree manager go through the tasks
     specified in the selected xml tree.
