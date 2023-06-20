@@ -1,5 +1,7 @@
 #include "my_behavior_tree_pkg/fibonacci_btnode.hpp"
 
+#include <std_msgs/msg/int8.hpp>
+
 // This example was taken from:
 // https://www.behaviortree.dev/docs/ros2_integration/
 
@@ -10,7 +12,7 @@
 BT::PortsList FibonacciAction::providedPorts()
 {
   BT::PortsList list;
-  list.insert({BT::InputPort<int>("order")});
+  list.insert({BT::InputPort<std_msgs::msg::Int8>("order")});
   return providedBasicPorts(list);
 }
 
@@ -20,7 +22,9 @@ BT::PortsList FibonacciAction::providedPorts()
 bool FibonacciAction::setGoal(Goal& goal)
 {
   // get "order" from the Input port
-  getInput("order", goal.order);
+  std_msgs::msg::Int8 msg_ros;
+  getInput("order", msg_ros);
+  goal.order = msg_ros.data;
   // return true, if we were able to set the goal correctly.
   return true;
 }

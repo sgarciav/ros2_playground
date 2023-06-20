@@ -38,6 +38,7 @@ ament_target_dependencies(fibonacci_btnode
   action_interfaces
   behaviortree_cpp
   behaviortree_ros2
+  std_msgs
   )
 
 add_library(saysomething_btnode STATIC

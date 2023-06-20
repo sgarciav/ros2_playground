@@ -137,15 +137,22 @@ that will be connected to all other spinning containers on the same machine.
 
         ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
 
-    The tree will start but will stop at the `RosToBlackboard` task and wait
-    idly.
+    The tree will start and you will see the following message displayed:
+
+    ```
+    [bt_task_manager-1] ===========
+    [bt_task_manager-1] Robot says: Hello, World!
+    [bt_task_manager-1] ===========
+    ```
+
+    Afterwards, the tree will pause at the `RosToBlackboard` task and wait idly.
 
 3. In terminal 3, publish a message to the corresponding fibonacci topic:
 
         ros2 topic pub -r 3 /bt_sub_topic std_msgs/msg/Int32 "{data: 9}"
 
-At this point you should see the behavior tree manager go through the tasks
-specified in the selected xml tree.
+    At this point you should see the behavior tree manager go through the tasks
+    specified in the selected xml tree.
 
 ## Stop the containers
 
