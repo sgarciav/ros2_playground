@@ -56,9 +56,13 @@ and their interactions with ROS 2. Namely:
 
 * BT nodes that inherit from the `RosTopicSubNode` class.
   * Example:
-    [SubscriberInt](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/subscriber_int_btnode.cpp)
+    [RosToBlackboard](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/include/my_behavior_tree_pkg/ros_to_blackboard_btnode.hpp)
   * BT nodes that subscribe to a ROS topic and, typically, write the value to
     the Blackboard for the rest of the BT architecture to leverage.
+  * The `RosToBlackboard` node, specifically, is a template class. Developers
+    can add it to the tree factory by specifying ANY ROS message type. This
+    nodemakes it such that developers don't need to define and compile a new
+    class for each ROS message type of interest.
 
 * Input/output ports that handle non-string message types (e.g., ROS messages).
   * Example:
@@ -133,25 +137,12 @@ that will be connected to all other spinning containers on the same machine.
 
         ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
 
-    The tree will start but will stop at the `SubscribeInt` task. You will see
-    the following messages printed in the terminal until the task hears a
-    message in the topic it's subscribed to:
-
-    ```
-    [bt_task_manager-1] [WARN] [1686650652.896902190] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650653.397232259] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650653.897523154] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650654.397771334] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650654.898057810] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650655.398351722] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650655.899318514] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650656.399711513] [bt_task_manager]: msg is null
-    [bt_task_manager-1] [WARN] [1686650656.900707227] [bt_task_manager]: msg is null
-    ```
+    The tree will start but will stop at the `RosToBlackboard` task and wait
+    idly.
 
 3. In terminal 3, publish a message to the corresponding fibonacci topic:
 
-        ros2 topic pub -r 3 /fibonacci/order std_msgs/msg/Int32 "{data: 9}"
+        ros2 topic pub -r 3 /bt_sub_topic std_msgs/msg/Int32 "{data: 9}"
 
 At this point you should see the behavior tree manager go through the tasks
 specified in the selected xml tree.

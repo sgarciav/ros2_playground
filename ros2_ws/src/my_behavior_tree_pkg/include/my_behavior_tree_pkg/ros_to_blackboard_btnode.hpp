@@ -1,11 +1,6 @@
 #include <behaviortree_ros2/bt_topic_sub_node.hpp>
 
-#include <std_msgs/msg/int8.hpp>
-
-// template <typename T>
-
-using T = std_msgs::msg::Int8;
-
+template<typename T>
 class RosToBlackboard : public BT::RosTopicSubNode<T>
 {
 public:
@@ -19,7 +14,7 @@ public:
   {
     BT::PortsList list;
     list.insert({BT::OutputPort<T>("value")});
-    return providedBasicPorts(list);
+    return BT::RosTopicSubNode<T>::providedBasicPorts(list);
   }
 
   virtual BT::NodeStatus onTick(const typename T::SharedPtr& last_msg)
@@ -28,7 +23,7 @@ public:
 
     if (last_msg != nullptr)
     {
-      setOutput<T>("value", *last_msg);
+      BT::TreeNode::setOutput<T>("value", *last_msg);
       status = BT::NodeStatus::SUCCESS;
     }
 
