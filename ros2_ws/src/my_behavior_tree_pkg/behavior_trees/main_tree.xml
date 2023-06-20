@@ -2,9 +2,11 @@
   <BehaviorTree ID="MainTree">
     <Sequence name="main_sequence">
       <SaySomething message="Hello, World!" />
-      <FibonacciAction order="5" />
-      <CalculateGoal goal="{GoalPosition}" />
-      <PrintTarget target="{GoalPosition}" />
+      <!-- <SubscriberInt order="{FibOrder}"/> <!-\- write order to FibOrder -\-> -->
+      <RosToBlackboard value="{FibOrder}"/> <!-- write order to FibOrder -->
+      <FibonacciAction order="{FibOrder}" /> <!-- read from FibOrder -->
+      <CalculateGoal goal="{GoalPosition}" /> <!-- write goal to GoalPosition -->
+      <PrintTarget target="{GoalPosition}" /> <!-- read from GoalPosition -->
     </Sequence>
   </BehaviorTree>
 </root>

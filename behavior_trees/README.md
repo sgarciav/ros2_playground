@@ -24,7 +24,12 @@ To following are notes to summarize the general architecture:
    example was
    taken [from here](https://www.behaviortree.dev/docs/ros2_integration/).
 
-3. There needs to be a task manager ROS 2 node that registers all the BT nodes,
+3. Nodes can also inherit from the `BT::RosTopicSubNode` or
+   `BT::RosTopicPubNode` classes. Their function is to subscribe or publish to
+   ROS topics, respectively. Use these nodes to pass data between ROS and the BT
+   Blackboard.
+
+4. There needs to be a task manager ROS 2 node that registers all the BT nodes,
    loads the tree, and executes the tree. The `bt_task_manager` ROS 2 node in
    this example provides all the basics needed.
 
@@ -34,8 +39,45 @@ This package provides working examples for some basic concepts related to BTs
 and their interactions with ROS 2. Namely:
 
 * BT nodes that inherit from the `SyncActionNode` class.
-* BT nodes that inherit from the `RodActionNode` class.
+  * Example:
+    [SaySomething](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/saysomething_btnode.cpp)
+  * Simple BT nodes that do not have a relationship with ROS.
+  * They are controlled by the `onTick()` function, which defines their
+    behavior.
+
+* BT nodes that inherit from the `RosActionNode` class.
+  * Example:
+    [Fibonacci](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/fibonacci_btnode.cpp)
+  * BT nodes that work as the ROS 2 action clients for their corresponding
+    action servers.
+  * Their function is to send a request to their action server, which is
+    reponsible for actually carrying out the task, and then return the status of
+    the action.
+
+* BT nodes that inherit from the `RosTopicSubNode` class.
+  * Example:
+    [RosToBlackboard](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/include/my_behavior_tree_pkg/ros_to_blackboard_btnode.hpp)
+  * BT nodes that subscribe to a ROS topic and, typically, write the value to
+    the Blackboard for the rest of the BT architecture to leverage.
+
 * Input/output ports that handle non-string message types (e.g., ROS messages).
+  * Example:
+    [CalculateGoal](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/calculategoal_btnode.cpp) to
+    write to the Blackboard,
+    and
+    [PrintTarget](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/printtarget_btnode.cpp) to
+    read from the Backboard.
+
+## RosToBlackboard
+
+The `RosToBlackboard` node is a special node. It's a template class. This node
+makes it such that developers don't need to define and compile a new class for
+each ROS message type of interest.
+
+Developers can register the node to the tree factory by specifying ANY ROS
+message type. They can register it as many times as they want but MAKE SURE that
+the node name and the topic it's susbcribing to are UNIQUE. The name is how you
+reference it in the xml tree.
 
 # First Time Instructions
 
@@ -94,21 +136,30 @@ that will be connected to all other spinning containers on the same machine.
 
 ## Run
 
-1. In one terminal, run the ROS 2 action server:
+1. In terminal 1, run the ROS 2 action server:
 
         ros2 run my_action_pkg fibonacci_server
 
-2. In a different terminal, run the behavior tree task manager:
+2. In terminal 2, run the behavior tree task manager to start the tree:
 
-        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py
+        ros2 launch my_behavior_tree_pkg bt_task_manager.launch.py tree_filename:=main_tree_groot.xml
 
-At this point you should see the behavior tree manager go through the tasks
-specified in the xml tree:
+    The tree will start and you will see the following message displayed:
 
-1. SaySomething
-2. FibonacciAction
-3. ComputeGoal
-4. PrintTarget
+    ```
+    [bt_task_manager-1] ===========
+    [bt_task_manager-1] Robot says: Hello, World!
+    [bt_task_manager-1] ===========
+    ```
+
+    Afterwards, the tree will pause at the `RosToBlackboard` task and wait idly.
+
+3. In terminal 3, publish a message to the corresponding fibonacci topic:
+
+        ros2 topic pub -r 3 /ros_to_blackboard/int std_msgs/msg/Int32 "{data: 9}"
+
+    At this point you should see the behavior tree manager go through the tasks
+    specified in the selected xml tree.
 
 ## Stop the containers
 
