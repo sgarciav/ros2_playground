@@ -60,6 +60,12 @@ and their interactions with ROS 2. Namely:
   * BT nodes that subscribe to a ROS topic and, typically, write the value to
     the Blackboard for the rest of the BT architecture to leverage.
 
+* BT nodes that inherit from the `RosTopicPubNode` class.
+  * Example:
+    [BlackboardToRos](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/include/my_behavior_tree_pkg/blackboard_to_ros_btnode.hpp)
+  * BT nodes that read a value from the Blackboard and, typically, publish the
+    value to a ROS topic.
+
 * Input/output ports that handle non-string message types (e.g., ROS messages).
   * Example:
     [CalculateGoal](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/calculategoal_btnode.cpp) to
@@ -68,16 +74,20 @@ and their interactions with ROS 2. Namely:
     [PrintTarget](https://github.com/sgarciav/ros2_playground/blob/master/ros2_ws/src/my_behavior_tree_pkg/src/printtarget_btnode.cpp) to
     read from the Backboard.
 
-## RosToBlackboard
+## Special Nodes
 
-The `RosToBlackboard` node is a special node. It's a template class. This node
-makes it such that developers don't need to define and compile a new class for
-each ROS message type of interest.
+The `RosToBlackboard` and `BlackboardToRos` nodes are special because they're
+templated classes - meaning that they work with any type of ROS message without
+requiring developers to define and compile a new class for each ROS message type
+of interest.
 
-Developers can register the node to the tree factory by specifying ANY ROS
-message type. They can register it as many times as they want but MAKE SURE that
-the node name and the topic it's susbcribing to are UNIQUE. The name is how you
+Developers can register a node to the tree factory by specifying ANY ROS message
+type. They can register it as many times as they want but MAKE SURE that the
+node name and the topic it's susbcribing to are UNIQUE. The name is how you
 reference it in the xml tree.
+
+A typical notation is `RosToBlackboard[MESSAGE]`, where `[MESSAGE]` is the ROS
+message type. Same for the `BlackboardToRos` node.
 
 # First Time Instructions
 
