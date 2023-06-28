@@ -6,8 +6,11 @@
 #include "my_behavior_tree_pkg/calculategoal_btnode.hpp" // write custom port type example
 #include "my_behavior_tree_pkg/printtarget_btnode.hpp" // read from custom port type example
 #include "my_behavior_tree_pkg/ros_to_blackboard_btnode.hpp" // subscribe to ROS topic and write value to Blackbord
+#include "my_behavior_tree_pkg/blackboard_to_ros_btnode.hpp" // read value from Blackboard and publish to ROS topic
 
 #include <std_msgs/msg/int8.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <geometry_msgs/msg/point.hpp>
 
 // static const char* xml_text = R"(
 // <root BTCPP_format="4" main_tree_to_execute="MainTree">
@@ -45,8 +48,10 @@ int main(int argc, char * argv[])
   factory.registerNodeType<CalculateGoal>("CalculateGoal");
   factory.registerNodeType<PrintTarget>("PrintTarget");
   factory.registerNodeType<FibonacciAction>("FibonacciAction", set_params(nh, "fibonacci"));
-  // note that the name has to be unique
-  factory.registerNodeType<RosToBlackboard<std_msgs::msg::Int8>>("RosToBlackboardInt", set_params(nh, "/ros_to_blackboard/int"));
+  // note that these name have to be unique
+  factory.registerNodeType<RosToBlackboard<std_msgs::msg::Int8>>("RosToBlackboardInt", set_params(nh, "/ros2bb/int"));
+  factory.registerNodeType<BlackboardToRos<std_msgs::msg::String>>("BlackboardToRosString", set_params(nh, "/bb2ros/string"));
+  factory.registerNodeType<BlackboardToRos<geometry_msgs::msg::Point>>("BlackboardToRosPoint", set_params(nh, "/bb2ros/point"));
 
   // Create the tree
   // You can load in the tree either from txt or from a file
