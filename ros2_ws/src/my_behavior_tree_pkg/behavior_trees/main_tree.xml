@@ -1,12 +1,46 @@
-<root BTCPP_format="4" main_tree_to_execute="MainTree">
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4"
+      main_tree_to_execute="MainTree">
   <BehaviorTree ID="MainTree">
     <Sequence name="main_sequence">
-      <SaySomething message="Hello, World!" />
-      <!-- <SubscriberInt order="{FibOrder}"/> <!-\- write order to FibOrder -\-> -->
-      <RosToBlackboard value="{FibOrder}"/> <!-- write order to FibOrder -->
-      <FibonacciAction order="{FibOrder}" /> <!-- read from FibOrder -->
-      <CalculateGoal goal="{GoalPosition}" /> <!-- write goal to GoalPosition -->
-      <PrintTarget target="{GoalPosition}" /> <!-- read from GoalPosition -->
+      <SaySomething message="Hello, World!"/>
+      <RetryUntilSuccessful num_attempts="-1">
+        <Delay delay_msec="500">
+          <RosToBlackboardInt value="{FibOrder}"/> <!-- write order to FibOrder -->
+        </Delay>
+      </RetryUntilSuccessful>
+      <FibonacciAction order="{FibOrder}"/> <!-- read from FibOrder -->
+      <CalculateGoal goal="{GoalPosition}"/> <!-- write goal to GoalPosition -->
+      <PrintTarget target="{GoalPosition}"/> <!-- read from GoalPosition -->
     </Sequence>
   </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="CalculateGoal"
+            editable="true">
+      <output_port name="goal"/>
+    </Action>
+    <Action ID="FibonacciAction"
+            editable="true">
+      <input_port name="order"/>
+    </Action>
+    <Action ID="PrintTarget"
+            editable="true">
+      <input_port name="target"/>
+    </Action>
+    <Action ID="SaySomething"
+            editable="true">
+      <input_port name="message"/>
+    </Action>
+    <Action ID="SubscriberInt"
+            editable="true">
+      <output_port name="order"/>
+    </Action>
+    <Action ID="RosToBlackboardInt"
+            editable="true">
+      <output_port name="value"/>
+    </Action>
+  </TreeNodesModel>
+
 </root>
