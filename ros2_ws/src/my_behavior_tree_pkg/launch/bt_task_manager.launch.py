@@ -35,6 +35,8 @@ def generate_launch_description():
         parameters=[
             {'path_to_tree': path_to_tree_file},
         ],
+        respawn=True,
+        respawn_delay=2,
     )
 
     nodes = [

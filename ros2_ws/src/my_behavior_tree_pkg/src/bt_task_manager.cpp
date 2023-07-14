@@ -58,6 +58,7 @@ int main(int argc, char * argv[])
   // BT::Tree tree = factory.createTreeFromText(xml_text);
   BT::Tree tree = factory.createTreeFromFile(path_to_tree);
 
+  std::cout << " ----- Ticking Tree ----- " << std::endl;
   tree.tickWhileRunning();
 
   return 0;
