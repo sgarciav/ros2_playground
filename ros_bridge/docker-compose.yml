@@ -1,4 +1,4 @@
-version: '2.3'
+version: "3.4"
 
 services:
   ros2_playground_test_rosbridge:
@@ -22,5 +22,6 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+       - ../ros2_ws/src:/home/ros/workspaces/ros2_ws/src
